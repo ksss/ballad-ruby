@@ -1,0 +1,14 @@
+#! /usr/bin/env ruby
+
+require 'optparse'
+require 'etc'
+require 'ballad'
+
+$stdin.sync = true
+$stdout.sync = true
+Thread.abort_on_exception = true
+Signal.trap(:SIGINT) do
+  exit 2
+end
+
+Ballad::Cli.new.parse.run
