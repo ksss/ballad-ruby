@@ -52,12 +52,6 @@ module Ballad
           while true
             url = @i_p_q.pop
             res = fetch(url)
-            unless res
-              m.synchronize {
-                in_count -= 1
-              }
-              next
-            end
             @p_r_q.push [edit(res), url]
           end
         }
@@ -115,6 +109,9 @@ module Ballad
     end
 
     def edit(res)
+      if res.nil?
+        return "???"
+      end
       outputs = []
       @opt.args.each do |arg|
         case arg
@@ -135,7 +132,6 @@ module Ballad
         http.request req
       end
     rescue
-      warn "request faild: #{uri}"
       return nil
     end
   end
